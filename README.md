@@ -17,12 +17,12 @@ A real-time food suggestion application built with **React**, **Vite**, **TanSta
 ### Sign in/Sign up
 | **Sign in View** | **Sign up View** |
 |:---:|:---:|
-| <img src="./demo/1.jpg" width="400" alt="Sign in View" /> | <img src="./demo/2.jpg" width="200" alt="Sign up View" /> |
+| <img src="./demo/1.jpg" width="300" alt="Sign in View" /> | <img src="./demo/2.jpg" width="300" alt="Sign up View" /> |
 
 ### Main Page & Live Event Test
 | **Main Page** | **Live Event Test** |
 |:---:|:---:|
-| <img src="./demo/3.jpg" width="400" alt="Main Page" /> | <img src="./demo/4.jpg" width="200" alt="Live Event Test" /> |
+| <img src="./demo/3.jpg" width="300" alt="Main Page" /> | <img src="./demo/4.jpg" width="300" alt="Live Event Test" /> |
 
 ### Random AI Suggestion
 | **Selection Based On Mood** | **Shuffling Suitable Food State** |
