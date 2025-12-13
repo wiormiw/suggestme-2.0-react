@@ -2,7 +2,7 @@
 
 A real-time food suggestion application built with **React**, **Vite**, **TanStack Query**, and **WebSockets**.
 
-**Depends on this project -> github.com/wiormiw/suggestme-2.0**
+**Depends on this project -> [github.com/wiormiw/suggestme-2.0](https://github.com/wiormiw/suggestme-2.0)**
 
 ## ✨ Features
 
