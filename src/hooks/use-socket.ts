@@ -34,8 +34,7 @@ export const useFoodSocket = (
       if (ws.current?.readyState === WebSocket.OPEN || ws.current?.readyState === WebSocket.CONNECTING) return;
 
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const host = window.location.host; 
-      const url = `${protocol}//${host}/ws`;
+      const url = `${protocol}//${import.meta.env.VITE_SOCKET_URL}`;
 
       const socket = new WebSocket(url);
       ws.current = socket;

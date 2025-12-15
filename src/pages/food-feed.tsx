@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFoodSocket } from '@/hooks/use-socket';
@@ -16,10 +16,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Star, Send, Wifi, WifiOff, LogOut, Loader2, Sparkles, Dna } from "lucide-react";
 import type { FoodListItem } from '@/lib/types';
 
-// Constants
 const MOOD_LIST = ['happy', 'stressed', 'tired', 'celebratory'] as const;
 
-// Helper for availability status
 const AvailabilityBadge = ({ isAvailable }: { isAvailable: boolean }) => {
   return (
     <span className={`font-medium text-xs ${isAvailable ? 'text-green-600' : 'text-red-600'}`}>
@@ -79,15 +77,17 @@ export default function FoodFeed() {
     setRealtimeRating(null);
   }, [selectedId]);
 
+  const socketCallbacks = useMemo(() => ({
+    onNewRating: (newAvg: number) => {
+      setRealtimeRating(newAvg);
+      queryClient.invalidateQueries({ queryKey: ['food', selectedId] });
+    }
+  }), [selectedId, queryClient]);
+
   const { isConnected, liveComments, sendMessage } = useFoodSocket(
     selectedId,
     userProfile?.id, 
-    {
-      onNewRating: (newAvg) => {
-        setRealtimeRating(newAvg);
-        queryClient.invalidateQueries({ queryKey: ['food', selectedId] });
-      }
-    }
+    socketCallbacks
   );
 
   const displayRating = realtimeRating ?? foodDetail?.averageRating ?? 0.0;
@@ -132,13 +132,11 @@ export default function FoodFeed() {
     }, 100);
 
     try {
-      // Add a minimum delay of 1.5s so the animation feels satisfying
       const [response] = await Promise.all([
         api.foods.suggest(mood),
         new Promise(resolve => setTimeout(resolve, 1500))
       ]);
 
-      // Stop Animation & Show Result
       clearInterval(interval);
       if (response && response.data) {
         setSuggestionResult(response.data);
